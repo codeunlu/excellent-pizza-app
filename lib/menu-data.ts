@@ -1,7 +1,7 @@
 export interface MenuItem {
   id: string;
-  name: { tr: string; de: string }; // Çift dil
-  description: { tr: string; de: string }; // Çift dil
+  name: { tr: string; de: string };
+  description: { tr: string; de: string };
   price: number;
   category: string;
   image: string;
@@ -14,7 +14,7 @@ export interface MenuItem {
 }
 
 export const categories = [
-  { id: 'hepsi' }, // İsimleri config dosyasından çekeceğiz
+  { id: 'hepsi' },
   { id: 'pizza' },
   { id: 'extra' },
   { id: 'icecek' },
@@ -47,6 +47,18 @@ export const menuItems: MenuItem[] = [
     options: { small: 140, medium: 170, large: 220 }
   },
   {
+    id: 'p3',
+    name: { tr: 'Vejetaryan', de: 'Vegetarisch' },
+    description: {
+      tr: 'Mozzarella, Mısır, Kapya, Çarliston, Zeytin, Mantar',
+      de: 'Mozzarella, Mais, Paprika, Oliven, Pilze'
+    },
+    price: 170,
+    category: 'pizza',
+    image: 'https://images.unsplash.com/photo-1541745537411-b8096dc29c42?w=800&q=80',
+    options: { small: 140, medium: 170, large: 220 }
+  },
+  {
     id: 'p4',
     name: { tr: 'Meksikalı', de: 'Mexicana' },
     description: {
@@ -59,8 +71,15 @@ export const menuItems: MenuItem[] = [
     isPopular: true,
     options: { small: 150, medium: 180, large: 230 }
   },
-  // ... Diğer pizzaları da aynı formatta { tr: '...', de: '...' } şeklinde güncellemelisin.
-  // Örnek olarak Kola:
+  // --- YAN ÜRÜNLER (Örnek) ---
+  {
+    id: 'e1',
+    name: { tr: 'Patates Cipsi', de: 'Pommes Frites' },
+    description: { tr: 'Kızartılmış Patates Cipsi', de: 'Frittierte Kartoffelchips' },
+    price: 60,
+    category: 'extra',
+    image: 'https://images.unsplash.com/photo-1573080496987-a199f8cd75c5?w=800&q=80',
+  },
   {
     id: 'i1',
     name: { tr: 'Kola', de: 'Cola' },

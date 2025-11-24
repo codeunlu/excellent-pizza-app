@@ -10,32 +10,30 @@ import { siteConfig } from "@/lib/site-config";
 
 export default function DetailClient({ item }: { item: MenuItem }) {
   const router = useRouter();
-  const { language } = useLanguage(); // Dili çek
+  const { language } = useLanguage();
   const [selectedSize, setSelectedSize] = useState<'small' | 'medium' | 'large'>('medium');
 
-  // Eğer sayfaya direkt linkten girilirse ve dil seçili değilse ana sayfaya at
+  // Dil seçilmediyse anasayfaya at
   useEffect(() => {
     if (!language) {
       router.push('/');
     }
   }, [language, router]);
 
-  if (!language) return null; // Yükleniyor veya redirect oluyor
+  if (!language) return null;
 
-  const t = siteConfig.translations[language]; // Çeviriler
+  const t = siteConfig.translations[language];
 
   const currentPrice = item.options
       ? item.options[selectedSize]
       : item.price;
 
   const handleOrderCall = () => {
-    // Config dosyasındaki numarayı kullanıyoruz
     window.open(`tel:+${siteConfig.phoneNumber}`, '_self');
   };
 
   return (
       <div className="min-h-screen bg-white pb-24 relative">
-        {/* Görsel */}
         <div className="relative h-[40vh] w-full bg-gray-100">
           <button
               onClick={() => router.back()}

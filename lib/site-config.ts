@@ -3,17 +3,17 @@ export const siteConfig = {
   brandName: "Excellent",
   brandSubtitle: "Homemade Pizza",
 
-  // İletişim (Başında 0 olmadan)
+  // İletişim (Başında 0 olmadan - örn: 905555555555)
   phoneNumber: "905555555555",
 
   // Renkler
   colors: {
-    primary: "#991b1b", // Kırmızı
+    primary: "#991b1b", // Koyu Kırmızı
     secondary: "#fefce8", // Krem
     text: "#1a1a1a", // Siyah
   },
 
-  // UI Metinleri (Çeviriler)
+  // Çeviriler
   translations: {
     tr: {
       searchPlaceholder: "Pizza veya ürün ara...",
@@ -25,12 +25,11 @@ export const siteConfig = {
       singlePrice: "TEK FİYAT",
       sizeSelect: "Porsiyon Seçimi",
       ingredients: "İçindekiler",
-      addToCart: "Sepete Ekle", // Artık kullanılmıyor ama kalsın
       callToOrder: "Sipariş İçin Ara",
       back: "Geri",
       welcome: "Hoşgeldiniz",
       selectLang: "Lütfen dil seçimi yapınız / Bitte wählen Sie Ihre Sprache",
-      info: "Siparişleriniz taze malzemelerle hazırlanır.",
+      info: "Siparişleriniz taze malzemelerle, anlık olarak hazırlanmaktadır. Afiyet olsun!",
       categories: {
         hepsi: "Tümü",
         pizza: "Pizzalar",
@@ -48,12 +47,11 @@ export const siteConfig = {
       singlePrice: "EINZELPREIS",
       sizeSelect: "Größe wählen",
       ingredients: "Zutaten",
-      addToCart: "In den Warenkorb",
       callToOrder: "Jetzt Bestellen",
       back: "Zurück",
       welcome: "Willkommen",
       selectLang: "Sprache wählen",
-      info: "Ihre Bestellung wird frisch zubereitet.",
+      info: "Ihre Bestellung wird mit frischen Zutaten zubereitet. Guten Appetit!",
       categories: {
         hepsi: "Alle",
         pizza: "Pizzen",
