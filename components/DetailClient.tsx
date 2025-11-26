@@ -11,9 +11,14 @@ import { siteConfig } from "@/lib/site-config";
 export default function DetailClient({ item }: { item: MenuItem }) {
   const router = useRouter();
   const { language } = useLanguage();
-  const [selectedSize, setSelectedSize] = useState<'small' | 'medium' | 'large'>('medium');
 
-  // Dil seçilmediyse anasayfaya at
+  // Varsayılan Seçenek Mantığı:
+  // Eğer ürünün seçenekleri varsa (options array), ilkinin 'key' değerini seç (örn: 'medium' veya '330ml').
+  // Yoksa null olsun.
+  const [selectedOptionKey, setSelectedOptionKey] = useState<string | null>(
+    item.options && item.options.length > 0 ? item.options[0].key : null
+  );
+
   useEffect(() => {
     if (!language) {
       router.push('/');
@@ -24,16 +29,20 @@ export default function DetailClient({ item }: { item: MenuItem }) {
 
   const t = siteConfig.translations[language];
 
-  const currentPrice = item.options
-      ? item.options[selectedSize]
-      : item.price;
+  // Fiyat Hesaplama Mantığı:
+  // Seçili bir opsiyon varsa onun fiyatını al, yoksa ürünün baz fiyatını al.
+  const selectedOption = item.options?.find(opt => opt.key === selectedOptionKey);
+  const currentPrice = selectedOption ? selectedOption.price : item.price;
 
   const handleOrderCall = () => {
+    // Sipariş mesajına detay ekleyelim (Opsiyonel)
+    // Örn: Margarita - Büyük Boy
     window.open(`tel:+${siteConfig.phoneNumber}`, '_self');
   };
 
   return (
       <div className="min-h-screen bg-white pb-24 relative">
+        {/* Üst Görsel Alanı */}
         <div className="relative h-[40vh] w-full bg-gray-100">
           <button
               onClick={() => router.back()}
@@ -46,43 +55,55 @@ export default function DetailClient({ item }: { item: MenuItem }) {
         </div>
 
         <div className="px-5 -mt-8 relative z-10">
+          {/* Başlık ve Fiyat */}
           <div className="flex justify-between items-start mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 leading-tight w-2/3">{item.name[language]}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 leading-tight w-2/3 font-serif">
+              {item.name[language]}
+            </h1>
             <div className="text-right">
-              <span className="block text-3xl font-bold text-[#991b1b]">₺{currentPrice}</span>
+              <span className="block text-3xl font-bold text-[#991b1b]">
+                ₺{currentPrice}
+              </span>
             </div>
           </div>
 
-          {item.options && (
+          {/* Dinamik Seçenekler Alanı */}
+          {item.options && item.options.length > 0 && (
               <div className="mb-8">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 block">{t.sizeSelect}</label>
-                <div className="grid grid-cols-3 gap-3">
-                  {[
-                    { id: 'small', label: t.small, price: item.options.small },
-                    { id: 'medium', label: t.medium, price: item.options.medium },
-                    { id: 'large', label: t.large, price: item.options.large },
-                  ].map((size) => (
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 block">
+                  {t.sizeSelect}
+                </label>
+                {/* Grid yapısını seçenek sayısına göre ayarlayalım */}
+                <div className={`grid gap-3 ${item.options.length > 2 ? 'grid-cols-3' : 'grid-cols-2'}`}>
+                  {item.options.map((option) => (
                       <button
-                          key={size.id}
-                          onClick={() => setSelectedSize(size.id as any)}
+                          key={option.key}
+                          onClick={() => setSelectedOptionKey(option.key)}
                           className={`
-                    py-3 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center
-                    ${selectedSize === size.id
-                              ? 'border-[#991b1b] bg-[#fff1f1] text-[#991b1b] shadow-sm transform scale-105'
+                            py-3 px-2 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center relative
+                            ${selectedOptionKey === option.key
+                              ? 'border-[#991b1b] bg-[#fff1f1] text-[#991b1b] shadow-sm transform scale-105 z-10'
                               : 'border-gray-100 bg-gray-50 text-gray-400 hover:border-gray-200'
                           }
-                  `}
+                          `}
                       >
-                        <span className="font-bold text-sm">{size.label}</span>
-                        <span className="text-[10px] mt-1">₺{size.price}</span>
+                        <span className="font-bold text-sm text-center leading-tight">
+                          {option.name[language]}
+                        </span>
+                        <span className="text-[10px] mt-1 font-semibold">
+                          ₺{option.price}
+                        </span>
                       </button>
                   ))}
                 </div>
               </div>
           )}
 
+          {/* İçindekiler / Açıklama Etiketleri */}
           <div className="mb-8">
-            <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 block">{t.ingredients}</label>
+            <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 block">
+              {t.ingredients}
+            </label>
             <div className="flex flex-wrap gap-2">
               {item.description[language].split(',').map((tag, i) => (
                   <span key={i} className="px-3 py-1.5 bg-[#fefce8] text-[#991b1b] border border-[#fecaca] rounded-lg text-sm font-medium">
@@ -92,19 +113,23 @@ export default function DetailClient({ item }: { item: MenuItem }) {
             </div>
           </div>
 
+          {/* Bilgi Kutusu */}
           <div className="p-4 bg-gray-50 rounded-xl text-gray-500 text-sm leading-relaxed border border-gray-100">
             {t.info}
           </div>
         </div>
 
+        {/* Sipariş Butonu */}
         <div className="fixed bottom-0 left-0 w-full p-4 bg-white border-t border-gray-100 z-20 max-w-md mx-auto right-0 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
           <Button
               onClick={handleOrderCall}
-              className="w-full h-14 text-lg font-bold rounded-xl shadow-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-transform"
+              className="w-full h-14 text-lg font-bold rounded-xl shadow-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-transform hover:bg-green-600"
               style={{ backgroundColor: "#22c55e" }}
           >
             <PhoneCall className="w-6 h-6 text-white" />
-            <span className="text-white">{t.callToOrder}</span>
+            <span className="text-white">
+              {t.callToOrder}
+            </span>
           </Button>
         </div>
       </div>

@@ -1,63 +1,56 @@
 export const siteConfig = {
-  // Marka Bilgileri
-  brandName: "Excellent",
-  brandSubtitle: "Homemade Pizza",
-
-  // İletişim (Başında 0 olmadan - örn: 905555555555)
-  phoneNumber: "905555555555",
-
-  // Renkler
-  colors: {
-    primary: "#991b1b", // Koyu Kırmızı
-    secondary: "#fefce8", // Krem
-    text: "#1a1a1a", // Siyah
-  },
-
-  // Çeviriler
+  brandName: "Excellent Homemade Pizza",
+  brandSubtitle: "Pizza House",
+  url: "https://excellenthomemadepizza.com", 
+  phoneNumber: "905551234567", // Telefon numaran
+  address: "Örnek Mahallesi, Pizza Caddesi No:1, Ankara", // Adresin
+  googleMapsUrl: "https://goo.gl/maps/ornek", // Google Maps linkin
+  keywords: [
+    "Excellent Pizza",
+    "Ev yapımı pizza",
+    "Homemade Pizza",
+    "Hamburger",
+    "Dazkırı Pizza Sipariş",
+    "Lezzetli Pizza",
+    "Pizza Delivery",
+    "Fast Food"
+  ],
   translations: {
     tr: {
-      searchPlaceholder: "Pizza veya ürün ara...",
-      notFound: "Aradığınız ürün bulunamadı 😔",
-      small: "KÇK",
-      medium: "ORT",
-      large: "BYK",
-      favorite: "Favori",
-      singlePrice: "TEK FİYAT",
-      sizeSelect: "Porsiyon Seçimi",
-      ingredients: "İçindekiler",
+      selectLang: "Lütfen bir dil seçin",
+      searchPlaceholder: "Pizza ara...",
+      categories: { hepsi: "Hepsi", pizza: "Pizza", burger: "Burger", icecek: "İçecekler", yan: "Yan Ürünler" },
+      favorite: "Favori Lezzet",
+      singlePrice: "Tek Fiyat",
+      notFound: "Üzgünüz, aradığınız lezzet bulunamadı.",
       callToOrder: "Sipariş İçin Ara",
-      back: "Geri",
-      welcome: "Hoşgeldiniz",
-      selectLang: "Lütfen dil seçimi yapınız / Bitte wählen Sie Ihre Sprache",
-      info: "Siparişleriniz taze malzemelerle, anlık olarak hazırlanmaktadır. Afiyet olsun!",
-      categories: {
-        hepsi: "Tümü",
-        pizza: "Pizzalar",
-        extra: "Excellent Extra",
-        icecek: "İçecekler"
-      }
+      sizeSelect: "Boyut Seçimi",
+      ingredients: "İçindekiler",
+      small: "Küçük",
+      medium: "Orta",
+      large: "Büyük",
+      info: "Ürünlerimiz günlük taze hamur ve %100 doğal malzemelerle hazırlanmaktadır. Alerjen uyarısı: Gluten ve laktoz içerebilir.",
+      metaDescription: "Excellent Homemade Pizza ile en lezzetli ev yapımı pizzalar ve hamburgerler kapınızda. Hemen sipariş verin!"
     },
     de: {
-      searchPlaceholder: "Suchen Sie nach Pizza...",
-      notFound: "Produkt nicht gefunden 😔",
-      small: "KLN",
-      medium: "MIT",
-      large: "GRS",
+      selectLang: "Bitte wählen Sie eine Sprache",
+      searchPlaceholder: "Suche nach Pizza oder Burger...",
+      categories: { hepsi: "Alle", pizza: "Pizza", burger: "Burger", icecek: "Getränke", yan: "Beilagen" },
       favorite: "Beliebt",
-      singlePrice: "EINZELPREIS",
-      sizeSelect: "Größe wählen",
-      ingredients: "Zutaten",
+      singlePrice: "Einzelpreis",
+      notFound: "Entschuldigung, nichts gefunden.",
       callToOrder: "Jetzt Bestellen",
-      back: "Zurück",
-      welcome: "Willkommen",
-      selectLang: "Sprache wählen",
-      info: "Ihre Bestellung wird mit frischen Zutaten zubereitet. Guten Appetit!",
-      categories: {
-        hepsi: "Alle",
-        pizza: "Pizzen",
-        extra: "Extras",
-        icecek: "Getränke"
-      }
+      sizeSelect: "Größe Wählen",
+      ingredients: "Zutaten",
+      small: "Klein",
+      medium: "Mittel",
+      large: "Groß",
+      info: "Unsere Produkte werden täglich mit frischem Teig und 100% natürlichen Zutaten zubereitet. Allergikerhinweis: Kann Gluten und Laktose enthalten.",
+      metaDescription: "Genießen Sie die beste hausgemachte Pizza und Burger bei Excellent Homemade Pizza. Jetzt bestellen!"
     }
+  },
+  colors: {
+    primary: "#991b1b",
+    secondary: "#f9fafb"
   }
 };

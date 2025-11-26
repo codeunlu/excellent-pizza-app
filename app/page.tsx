@@ -13,7 +13,6 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState("hepsi");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // --- 1. DİL SEÇİM EKRANI (Açılış) ---
   if (!language) {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-[#991b1b] px-4 relative overflow-hidden">
@@ -67,17 +66,13 @@ export default function Home() {
   return (
       <main className="min-h-screen pb-8" style={{ backgroundColor: siteConfig.colors.secondary }}>
 
-        {/* --- HEADER (Revize Edildi) --- */}
+        {/* --- HEADER --- */}
         <div className="relative pb-20 pt-8 rounded-b-[40px] shadow-2xl overflow-hidden bg-[#991b1b]">
-          {/* Gradient Katmanı (Derinlik için) */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/5 pointer-events-none"></div>
-
-          {/* Arka plan dekorasyonları */}
           <div className="absolute -top-24 -right-10 w-64 h-64 bg-red-600 rounded-full blur-3xl opacity-40"></div>
           <div className="absolute top-10 -left-10 w-40 h-40 bg-orange-500 rounded-full blur-3xl opacity-20"></div>
 
           <div className="container mx-auto px-4 flex flex-col items-center relative z-10">
-            {/* Logo */}
             <div className="w-32 h-32 mb-3 flex items-center justify-center filter drop-shadow-xl hover:scale-105 transition-transform duration-500">
               <img
                   src="/logo.png"
@@ -85,7 +80,6 @@ export default function Home() {
                   className="w-full h-full object-contain"
               />
             </div>
-
             <h1 className="text-4xl font-bold text-white tracking-wider uppercase drop-shadow-md font-serif">{siteConfig.brandName}</h1>
             <p className="text-xs font-bold text-orange-100 tracking-[0.5em] uppercase mt-2 opacity-90">{siteConfig.brandSubtitle}</p>
           </div>
@@ -105,10 +99,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* --- KATEGORİLER (Kaydırma Düzeltildi) --- */}
-        {/* Sticky: Search bar'ın altına yapışır */}
+        {/* --- KATEGORİLER --- */}
         <div className="sticky top-0 z-40 py-4 mt-2 bg-[#fefce8]/95 backdrop-blur-md border-b border-gray-200/50 shadow-sm">
-          {/* DÜZELTME: w-full, flex-nowrap ve butonlarda shrink-0 */}
           <div className="w-full overflow-x-auto no-scrollbar touch-pan-x">
             <div className="flex gap-3 px-6 w-max">
               {categories.map((cat) => (
@@ -125,7 +117,7 @@ export default function Home() {
                 `}
                       style={{ backgroundColor: activeCategory === cat.id ? siteConfig.colors.primary : undefined }}
                   >
-                    {(t.categories as any)[cat.id] || cat.id.toUpperCase()}
+                    {(t.categories as never)[cat.id] || cat.id.toUpperCase()}
                   </button>
               ))}
             </div>
@@ -141,6 +133,7 @@ export default function Home() {
                       onClick={() => router.push(`/product/${item.id}`)}
                       className="group bg-white rounded-2xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-gray-100 overflow-hidden cursor-pointer active:scale-[0.98] transition-all hover:shadow-lg"
                   >
+                    {/* Görsel Alanı */}
                     <div className="relative h-48 w-full overflow-hidden">
                       <img src={item.image} alt={item.name[language]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                       {item.isPopular && (
@@ -155,25 +148,30 @@ export default function Home() {
                       <p className="text-sm text-gray-500 line-clamp-2 mb-4 h-10 leading-relaxed">{item.description[language]}</p>
 
                       <div className="mt-2">
-                        {item.options ? (
-                            <div className="flex bg-gray-50 rounded-xl p-1.5 border border-gray-100 divide-x divide-gray-200">
-                              <div className="flex-1 flex flex-col items-center justify-center py-1">
-                                <span className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">{t.small}</span>
-                                <span className="text-sm font-bold text-gray-900">₺{item.options.small}</span>
-                              </div>
-                              <div className="flex-1 flex flex-col items-center justify-center py-1 bg-white rounded-lg shadow-sm border border-gray-100 mx-0.5">
-                                <span className="text-[9px] text-[#991b1b] font-bold uppercase tracking-wider">{t.medium}</span>
-                                <span className="text-base font-bold text-[#991b1b]">₺{item.options.medium}</span>
-                              </div>
-                              <div className="flex-1 flex flex-col items-center justify-center py-1">
-                                <span className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">{t.large}</span>
-                                <span className="text-sm font-bold text-gray-900">₺{item.options.large}</span>
-                              </div>
+                        {/* FİYAT ALANI GÜNCELLEMESİ */}
+                        {item.options && item.options.length > 1 ? (
+                            // Çoklu Seçenek Varsa (Örn: Pizza M/L veya İçecek 330ml/1L)
+                            <div className="flex bg-gray-50 rounded-xl p-1.5 border border-gray-100 divide-x divide-gray-200 overflow-hidden">
+                              {item.options.map((option) => (
+                                  <div key={option.key} className="flex-1 px-1 flex flex-col items-center justify-center py-1">
+                                    <span className="text-[9px] text-gray-500 font-bold uppercase tracking-wider text-center line-clamp-1">
+                                      {option.name[language]}
+                                    </span>
+                                    <span className="text-sm font-bold text-[#991b1b]">
+                                      ₺{option.price}
+                                    </span>
+                                  </div>
+                              ))}
                             </div>
                         ) : (
+                            // Tek Seçenek veya Hiç Yoksa
                             <div className="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100 px-5">
-                              <span className="font-bold text-xl text-gray-900">₺{item.price}</span>
-                              <span className="text-[10px] font-bold text-gray-400 tracking-wider border border-gray-200 px-2 py-1 rounded">{t.singlePrice}</span>
+                              <span className="font-bold text-xl text-[#991b1b]">
+                                ₺{item.options && item.options.length === 1 ? item.options[0].price : item.price}
+                              </span>
+                              <span className="text-[10px] font-bold text-gray-400 tracking-wider border border-gray-200 px-2 py-1 rounded bg-white">
+                                {item.options && item.options.length === 1 ? item.options[0].name[language] : t.singlePrice}
+                              </span>
                             </div>
                         )}
                       </div>
@@ -188,6 +186,37 @@ export default function Home() {
           )}
           <div className="h-8"></div>
         </div>
+        <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      name: siteConfig.brandName,
+      image: [
+        `${siteConfig.url}/logo.png`,
+        // Buraya varsa dükkanın gerçek fotolarını ekle
+      ],
+      "@id": siteConfig.url,
+      url: siteConfig.url,
+      telephone: siteConfig.phoneNumber,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Pizza Caddesi No:1", // siteConfig'den alabilirsin
+        addressLocality: "Ankara",
+        addressCountry: "TR"
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 39.9334, // Dükkanın gerçek koordinatlarını bulup buraya yaz
+        longitude: 32.8597
+      },
+      servesCuisine: "Pizza, Hamburger, Fast Food",
+      priceRange: "₺₺"
+    }),
+  }}
+/>
       </main>
+
   );
 }
