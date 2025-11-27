@@ -2,8 +2,12 @@ import { MetadataRoute } from 'next'
 import { siteConfig } from '@/lib/site-config'
 import { menuItems } from '@/lib/menu-data'
 
+// --- BU SATIRI EKLE ---
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url
+
   const routes = [
     {
       url: baseUrl,
